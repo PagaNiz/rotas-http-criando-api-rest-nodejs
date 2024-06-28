@@ -10,12 +10,14 @@ export async function transactionsRoutes(app: FastifyInstance) {
     {
       preHandler: [checkSessioIdExists],
     },
-    async (request, reply) => {
+    async (request) => {
       const { sessionId } = request.cookies;
 
       const transactions = await knex("transactions")
         .where("session_id", sessionId)
         .select();
+
+      console.log(transactions);
 
       return { transactions };
     }
